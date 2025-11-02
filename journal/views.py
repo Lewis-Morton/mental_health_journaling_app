@@ -13,7 +13,7 @@ from.serializers import UserSerializer
 # Views for journalentry model
 # These views handle CRUD operations on journal entries
 class JournalCreateAPIView(generics.CreateAPIView):
-    queryset = JournalEntry.objectsall()
+    queryset = JournalEntry.objects.all()
     serializer_class = JournalEntrySerializer
 
 class JournalDetailAPIView(generics.RetrieveAPIView):
