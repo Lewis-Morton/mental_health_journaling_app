@@ -1,13 +1,19 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, permissions
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from.models import JournalEntry
+from.models import User
 from.serializers import JournalEntrySerializer
+from.serializers import UserSerializer
+
+
 
 # Create your views here.
+
 # Views for journalentry model
 # These views handle CRUD operations on journal entries
 class JournalCreateAPIView(generics.CreateAPIView):
-    queryset = JournalEntry.objects(all)
+    queryset = JournalEntry.objectsall()
     serializer_class = JournalEntrySerializer
 
 class JournalDetailAPIView(generics.RetrieveAPIView):
@@ -22,4 +28,21 @@ class JournalDestroyAPIView(generics.DestroyAPIView):
     queryset = JournalEntry.objects.all()
     serializer_class = JournalEntrySerializer
 
+# User Views
+
+# List all users (admin -only)
+class UserListAPIView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+# Retieves and updates user profile (self-only)
+class UserRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    authentication_classes = [JWTAuthenitcation]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
 
