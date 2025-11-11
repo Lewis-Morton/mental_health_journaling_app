@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'journal',
     'rest_framework',
     'corsheaders',
+    'channels',
 ]
 
 REST_FRAMEWORK = {
@@ -93,6 +94,16 @@ TEMPLATES = [
         },
     },
 ]
+
+ASGI_APPLICATION = 'mental_health_journal.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannleLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)]},
+    },
+}
 
 WSGI_APPLICATION = 'mental_health_journal.wsgi.application'
 
